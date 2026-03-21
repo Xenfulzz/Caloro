@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Caloro - Calorie Calculator</title>
 
 <link rel="icon" type="image/png" href="logo1.png">
@@ -26,6 +27,7 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.08);
 }
 
+/* Header */
 .header {
   text-align: center;
   margin-bottom: 35px;
@@ -55,6 +57,7 @@ body {
   font-size: 14px;
 }
 
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -65,6 +68,7 @@ body {
   grid-column: 1 / -1;
 }
 
+/* Inputs */
 input, select {
   padding: 14px;
   border-radius: 12px;
@@ -79,6 +83,7 @@ input:focus, select:focus {
   background: white;
 }
 
+/* Button */
 .main-btn {
   width: 100%;
   margin-top: 22px;
@@ -96,12 +101,14 @@ input:focus, select:focus {
   background: #43a047;
 }
 
+/* Divider */
 .divider {
   margin: 25px 0;
   border: none;
   border-top: 1px solid #eee;
 }
 
+/* Results */
 .results {
   display: none;
 }
@@ -181,11 +188,50 @@ input:focus, select:focus {
   margin-top: 8px;
 }
 
+/* Footer */
 .footer {
   text-align: center;
   margin-top: 20px;
   font-size: 13px;
   color: #888;
+}
+
+/* 🔥 MOBILE FIXES */
+@media (max-width: 600px) {
+
+  body {
+    padding: 20px 12px;
+  }
+
+  .card {
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-row span {
+    font-size: 24px;
+  }
+
+  .logo-row img {
+    height: 28px;
+  }
+
+  .main-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .email-form {
+    flex-direction: column;
+  }
+
+  .email-form button {
+    width: 100%;
+  }
 }
 </style>
 </head>
@@ -251,7 +297,6 @@ input:focus, select:focus {
         Extreme weight loss
       </div>
 
-      <!-- EMAIL CAPTURE -->
       <div class="email-box">
         <h3>Get your free meal plan</h3>
         <p>Based on your calories — simple & beginner friendly</p>
@@ -313,29 +358,14 @@ function submitEmail() {
     return;
   }
 
-  fetch("https://canary.discord.com/api/webhooks/1484927352889938001/l782Tp6wwQVhLgYXXrzKJRYmX3z8li3JSQmHh91pPElzxankw52b6jwqz1hRdpsyB8_c", {
+  fetch("YOUR_WEBHOOK_URL_HERE", {
     method: "POST",
+    mode: "no-cors",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      username: "Caloro Bot",
-      embeds: [
-        {
-          title: "📩 New Email Signup",
-          description: "New user joined Caloro",
-          color: 3066993,
-          fields: [
-            { name: "Email", value: email },
-            { name: "Source", value: "Website", inline: true },
-            { name: "Type", value: "Meal Plan", inline: true }
-          ],
-          footer: {
-            text: "Caloro • Email Capture"
-          },
-          timestamp: new Date().toISOString()
-        }
-      ]
+      content: "📩 New signup: " + email
     })
   });
 
