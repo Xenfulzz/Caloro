@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Caloro - Calorie Calculator</title>
+
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #eef1f5;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+.wrapper {
+  max-width: 520px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+/* 🔥 Header / Branding */
+.header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #4CAF50;
+  letter-spacing: -0.5px;
+}
+
+.header p {
+  margin-top: 8px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Layout */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+/* Inputs */
+input, select {
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e2e5ea;
+  font-size: 15px;
+  background: #fafbfc;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  background: white;
+}
+
+/* Button */
+.main-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.main-btn:hover {
+  background: #43a047;
+}
+
+/* Results */
+.results {
+  margin-top: 20px;
+  display: none;
+}
+
+.result-card {
+  background: #f1f3f5;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.result-card strong {
+  display: block;
+  font-size: 18px;
+}
+
+/* Recommended highlight */
+.recommended {
+  background: #e8f5e9;
+  border: 2px solid #4CAF50;
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  background: #4CAF50;
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <div class="card">
+
+    <div class="header">
+      <div class="logo">🔥 Caloro</div>
+      <p>Simple, accurate calories for fat loss or maintenance</p>
+    </div>
+
+    <div class="grid">
+      <input type="number" id="age" placeholder="Age">
+      <input type="number" id="weight" placeholder="Weight (kg)">
+      <input type="number" id="height" placeholder="Height (cm)" class="full">
+
+      <select id="gender" class="full">
+        <option value="">Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+      <select id="activity" class="full">
+        <option value="">Activity Level</option>
+        <option value="1.2">Low (little/no exercise)</option>
+        <option value="1.375">Light (1–3 days/week)</option>
+        <option value="1.55">Moderate (3–5 days/week)</option>
+        <option value="1.725">High (6–7 days/week)</option>
+      </select>
+    </div>
+
+    <button class="main-btn" onclick="calculateCalories()">Calculate</button>
+
+    <div class="results" id="results">
+
+      <div class="result-card">
+        <strong id="maintain"></strong>
+        Maintain weight
+      </div>
+
+      <div class="result-card">
+        <strong id="mild"></strong>
+        Mild weight loss (0.25kg/week)
+      </div>
+
+      <div class="result-card recommended">
+        <div class="badge">Recommended</div>
+        <strong id="loss"></strong>
+        Weight loss (0.5kg/week)
+      </div>
+
+      <div class="result-card">
+        <strong id="extreme"></strong>
+        Extreme weight loss (1kg/week)
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © 2026 Caloro • Built for beginners
+  </div>
+
+</div>
+
+<script>
+function calculateCalories() {
+  let age = document.getElementById("age").value;
+  let weight = document.getElementById("weight").value;
+  let height = document.getElementById("height").value;
+  let gender = document.getElementById("gender").value;
+  let activity = document.getElementById("activity").value;
+
+  if (!age || !weight || !height || !gender || !activity) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  let bmr;
+
+  if (gender === "male") {
+    bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+  } else {
+    bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+  }
+
+  let maintenance = bmr * activity;
+
+  document.getElementById("maintain").innerText = Math.round(maintenance) + " kcal";
+  document.getElementById("mild").innerText = Math.round(maintenance - 250) + " kcal";
+  document.getElementById("loss").innerText = Math.round(maintenance - 500) + " kcal";
+  document.getElementById("extreme").innerText = Math.round(maintenance - 1000) + " kcal";
+
+  document.getElementById("results").style.display = "block";
+}
+</script>
+
+</body>
+</html>
