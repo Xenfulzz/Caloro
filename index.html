@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Caloro - Calorie Calculator</title>
 
-<!-- Favicon -->
 <link rel="icon" type="image/png" href="logo1.png">
 
 <style>
@@ -27,7 +26,6 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.08);
 }
 
-/* Header */
 .header {
   text-align: center;
   margin-bottom: 35px;
@@ -42,11 +40,11 @@ body {
 }
 
 .logo-row img {
-  height: 34px; /* 🔥 improved */
+  height: 34px;
 }
 
 .logo-row span {
-  font-size: 28px; /* 🔥 improved */
+  font-size: 28px;
   font-weight: 700;
   color: #4CAF50;
 }
@@ -57,7 +55,6 @@ body {
   font-size: 14px;
 }
 
-/* Grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -68,14 +65,12 @@ body {
   grid-column: 1 / -1;
 }
 
-/* Inputs */
 input, select {
   padding: 14px;
   border-radius: 12px;
   border: 1px solid #e3e6ea;
   font-size: 15px;
   background: #fafbfc;
-  transition: 0.2s;
 }
 
 input:focus, select:focus {
@@ -84,7 +79,6 @@ input:focus, select:focus {
   background: white;
 }
 
-/* Button */
 .main-btn {
   width: 100%;
   margin-top: 22px;
@@ -96,22 +90,18 @@ input:focus, select:focus {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .main-btn:hover {
   background: #43a047;
-  transform: translateY(-1px);
 }
 
-/* Divider */
 .divider {
   margin: 25px 0;
   border: none;
   border-top: 1px solid #eee;
 }
 
-/* Results */
 .results {
   display: none;
 }
@@ -123,19 +113,13 @@ input:focus, select:focus {
   margin-bottom: 12px;
   text-align: center;
   border: 1px solid #edf0f3;
-  transition: 0.2s;
   position: relative;
-}
-
-.result-card:hover {
-  transform: translateY(-2px);
 }
 
 .result-card strong {
   font-size: 20px;
 }
 
-/* Recommended */
 .recommended {
   background: #e8f5e9;
   border: 2px solid #4CAF50;
@@ -150,29 +134,53 @@ input:focus, select:focus {
   font-size: 12px;
   padding: 4px 8px;
   border-radius: 6px;
-  font-weight: 600;
 }
 
-/* Trust */
-.trust-text {
-  font-size: 13px;
-  color: #666;
+/* Email */
+.email-box {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #f8fafc;
   text-align: center;
+  border: 1px solid #edf0f3;
+}
+
+.email-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.email-form input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.email-form button {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  background: #4CAF50;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.email-message {
   margin-top: 10px;
+  font-size: 13px;
+  color: green;
 }
 
-/* Next steps */
-.next-steps {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #555;
+.consent {
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
 }
 
-.next-steps h3 {
-  margin-bottom: 8px;
-}
-
-/* Footer */
 .footer {
   text-align: center;
   margin-top: 20px;
@@ -190,7 +198,7 @@ input:focus, select:focus {
 
     <div class="header">
       <a href="/" class="logo-row">
-        <img src="logo1.png" alt="Caloro icon">
+        <img src="logo1.png">
         <span>Caloro</span>
       </a>
       <p>Simple, accurate calories for fat loss or maintenance</p>
@@ -209,10 +217,10 @@ input:focus, select:focus {
 
       <select id="activity" class="full">
         <option value="">Activity Level</option>
-        <option value="1.2">Low (little/no exercise)</option>
-        <option value="1.375">Light (1–3 days/week)</option>
-        <option value="1.55">Moderate (3–5 days/week)</option>
-        <option value="1.725">High (6–7 days/week)</option>
+        <option value="1.2">Low</option>
+        <option value="1.375">Light</option>
+        <option value="1.55">Moderate</option>
+        <option value="1.725">High</option>
       </select>
     </div>
 
@@ -229,29 +237,35 @@ input:focus, select:focus {
 
       <div class="result-card">
         <strong id="mild"></strong>
-        Mild weight loss (0.25kg/week)
+        Mild weight loss
       </div>
 
       <div class="result-card recommended">
         <div class="badge">Recommended</div>
         <strong id="loss"></strong>
-        Weight loss (0.5kg/week)
+        Weight loss
       </div>
 
       <div class="result-card">
         <strong id="extreme"></strong>
-        Extreme weight loss (1kg/week)
+        Extreme weight loss
       </div>
 
-      <p class="trust-text">
-        Based on the Mifflin-St Jeor Equation — one of the most accurate calorie formulas used by professionals.
-      </p>
+      <!-- EMAIL CAPTURE -->
+      <div class="email-box">
+        <h3>Get your free meal plan</h3>
+        <p>Based on your calories — simple & beginner friendly</p>
 
-      <div class="next-steps">
-        <h3>What to do next</h3>
-        <p>• Follow your calorie target daily</p>
-        <p>• Track your weight for 2–3 weeks</p>
-        <p>• Adjust calories based on progress</p>
+        <div class="email-form">
+          <input type="email" id="emailInput" placeholder="Enter your email">
+          <button onclick="submitEmail()">Get Free Plan</button>
+        </div>
+
+        <p class="consent">
+          By entering your email, you agree to receive fitness tips and offers.
+        </p>
+
+        <p id="emailMessage" class="email-message"></p>
       </div>
 
     </div>
@@ -277,13 +291,9 @@ function calculateCalories() {
     return;
   }
 
-  let bmr;
-
-  if (gender === "male") {
-    bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
-  } else {
-    bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
-  }
+  let bmr = gender === "male"
+    ? (10 * weight) + (6.25 * height) - (5 * age) + 5
+    : (10 * weight) + (6.25 * height) - (5 * age) - 161;
 
   let maintenance = bmr * activity;
 
@@ -293,6 +303,43 @@ function calculateCalories() {
   document.getElementById("extreme").innerText = Math.round(maintenance - 1000) + " kcal";
 
   document.getElementById("results").style.display = "block";
+}
+
+function submitEmail() {
+  let email = document.getElementById("emailInput").value;
+
+  if (!email || !email.includes("@")) {
+    document.getElementById("emailMessage").innerText = "Please enter a valid email";
+    return;
+  }
+
+  fetch("https://canary.discord.com/api/webhooks/1484927352889938001/l782Tp6wwQVhLgYXXrzKJRYmX3z8li3JSQmHh91pPElzxankw52b6jwqz1hRdpsyB8_c", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: "Caloro Bot",
+      embeds: [
+        {
+          title: "📩 New Email Signup",
+          description: "New user joined Caloro",
+          color: 3066993,
+          fields: [
+            { name: "Email", value: email },
+            { name: "Source", value: "Website", inline: true },
+            { name: "Type", value: "Meal Plan", inline: true }
+          ],
+          footer: {
+            text: "Caloro • Email Capture"
+          },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    })
+  });
+
+  document.getElementById("emailMessage").innerText = "You're in! Check your email soon.";
 }
 </script>
 
