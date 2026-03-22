@@ -7,7 +7,7 @@
 
 <link rel="icon" type="image/png" href="logo1.png">
 
-<!-- ✅ AdSense Script -->
+<!-- AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5681534416531571"
 crossorigin="anonymous"></script>
 
@@ -161,7 +161,6 @@ input:focus, select:focus {
 .mid-ad {
   background: transparent;
   border: none;
-  padding: 5px 0;
 }
 
 .footer {
@@ -279,6 +278,11 @@ function calculateCalories() {
     return;
   }
 
+  age = parseInt(age);
+  weight = parseFloat(weight);
+  height = parseFloat(height);
+  activity = parseFloat(activity);
+
   let bmr = gender === "male"
     ? (10 * weight) + (6.25 * height) - (5 * age) + 5
     : (10 * weight) + (6.25 * height) - (5 * age) - 161;
@@ -292,9 +296,12 @@ function calculateCalories() {
 
   document.getElementById("results").style.display = "block";
 
-  // Load ads AFTER visible
-  (adsbygoogle = window.adsbygoogle || []).push({});
-  (adsbygoogle = window.adsbygoogle || []).push({});
+  try {
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  } catch (e) {
+    console.log("Ads not ready yet");
+  }
 }
 </script>
 
