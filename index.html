@@ -7,10 +7,6 @@
 
 <link rel="icon" type="image/png" href="logo1.png">
 
-<!-- AdSense (ONLY ONCE) -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5681534416531571"
-crossorigin="anonymous"></script>
-
 <style>
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -31,6 +27,7 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.08);
 }
 
+/* Header */
 .header {
   text-align: center;
   margin-bottom: 30px;
@@ -60,6 +57,7 @@ body {
   font-size: 14px;
 }
 
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -70,6 +68,7 @@ body {
   grid-column: 1 / -1;
 }
 
+/* Inputs */
 input, select {
   padding: 14px;
   border-radius: 12px;
@@ -84,6 +83,7 @@ input:focus, select:focus {
   background: white;
 }
 
+/* Button */
 .main-btn {
   width: 100%;
   margin-top: 22px;
@@ -101,12 +101,14 @@ input:focus, select:focus {
   background: #43a047;
 }
 
+/* Divider */
 .divider {
   margin: 25px 0;
   border: none;
   border-top: 1px solid #eee;
 }
 
+/* Results */
 .results {
   display: none;
 }
@@ -148,19 +150,48 @@ input:focus, select:focus {
   border-radius: 6px;
 }
 
-/* Ads */
-.ad-container {
-  margin: 20px 0;
-  padding: 10px;
+/* Email */
+.email-box {
+  margin-top: 25px;
+  padding: 20px;
   border-radius: 14px;
-  background: #f9fbfd;
-  border: 1px solid #edf0f3;
+  background: #f8fafc;
   text-align: center;
+  border: 1px solid #edf0f3;
 }
 
-.mid-ad {
-  background: transparent;
+.email-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.email-form input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.email-form button {
+  padding: 12px 16px;
+  border-radius: 10px;
   border: none;
+  background: #4CAF50;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.email-message {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.consent {
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
 }
 
 /* Footer */
@@ -171,8 +202,15 @@ input:focus, select:focus {
   color: #888;
 }
 
+/* Mobile */
 @media (max-width: 600px) {
+  body { padding: 16px 10px; }
+  .card { padding: 20px; border-radius: 16px; }
   .grid { grid-template-columns: 1fr; }
+  input, select { padding: 16px; font-size: 16px; }
+  .main-btn { padding: 16px; font-size: 16px; }
+  .email-form { flex-direction: column; gap: 12px; }
+  .email-form button { width: 100%; }
 }
 </style>
 </head>
@@ -210,7 +248,7 @@ input:focus, select:focus {
       </select>
     </div>
 
-    <button class="main-btn" onclick="calculateCalories()">Calculate Calories</button>
+    <button class="main-btn" id="calcBtn" onclick="calculateCalories()">Calculate Calories</button>
 
     <hr class="divider">
 
@@ -218,43 +256,47 @@ input:focus, select:focus {
 
       <div class="result-card">
         <strong id="maintain"></strong>
-        <div class="sub">Maintain weight</div>
+        <div class="sub" id="maintainRate"></div>
+        Maintain weight
       </div>
 
       <div class="result-card">
         <strong id="mild"></strong>
-        <div class="sub">Mild weight loss</div>
-      </div>
-
-      <!-- MID AD -->
-      <div class="ad-container mid-ad">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-5681534416531571"
-             data-ad-slot="3628949583"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
+        <div class="sub" id="mildRate"></div>
+        Mild weight loss
       </div>
 
       <div class="result-card recommended">
         <div class="badge">🔥 Popular</div>
         <strong id="loss"></strong>
-        <div class="sub">Weight loss</div>
+        <div class="sub" id="lossRate"></div>
+        Weight loss
       </div>
 
       <div class="result-card">
         <strong id="extreme"></strong>
-        <div class="sub">Extreme weight loss</div>
+        <div class="sub" id="extremeRate"></div>
+        Extreme weight loss
       </div>
 
-      <!-- MAIN AD -->
-      <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-5681534416531571"
-             data-ad-slot="3628949583"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
+      <p style="font-size:12px;color:#888;text-align:center;">
+        Estimates based on calorie deficit. Results may vary.
+      </p>
+
+      <div class="email-box">
+        <h3>Get your free meal plan</h3>
+        <p>Based on your calories — simple & beginner friendly</p>
+
+        <div class="email-form">
+          <input type="email" id="emailInput" placeholder="Enter your email">
+          <button onclick="submitEmail()">Get Free Plan</button>
+        </div>
+
+        <p class="consent">
+          By entering your email, you agree to receive fitness tips and offers.
+        </p>
+
+        <p id="emailMessage" class="email-message"></p>
       </div>
 
     </div>
@@ -262,12 +304,16 @@ input:focus, select:focus {
   </div>
 
   <div class="footer">
-    © 2026 Caloro
+    © 2026 Caloro • Built for beginners
   </div>
 </div>
 
 <script>
 function calculateCalories() {
+  let btn = document.getElementById("calcBtn");
+  btn.innerText = "Calculating...";
+  btn.disabled = true;
+
   let age = document.getElementById("age").value;
   let weight = document.getElementById("weight").value;
   let height = document.getElementById("height").value;
@@ -276,13 +322,10 @@ function calculateCalories() {
 
   if (!age || !weight || !height || !gender || !activity) {
     alert("Please fill in all fields");
+    btn.innerText = "Calculate Calories";
+    btn.disabled = false;
     return;
   }
-
-  age = parseInt(age);
-  weight = parseFloat(weight);
-  height = parseFloat(height);
-  activity = parseFloat(activity);
 
   let bmr = gender === "male"
     ? (10 * weight) + (6.25 * height) - (5 * age) + 5
@@ -290,20 +333,73 @@ function calculateCalories() {
 
   let maintenance = bmr * activity;
 
+  let mild = maintenance - 250;
+  let loss = maintenance - 500;
+  let extreme = maintenance - 1000;
+
+  function calcRate(deficit) {
+    let weekly = (deficit * 7) / 7700;
+    return "~" + weekly.toFixed(2) + " kg/week";
+  }
+
   document.getElementById("maintain").innerText = Math.round(maintenance) + " kcal";
-  document.getElementById("mild").innerText = Math.round(maintenance - 250) + " kcal";
-  document.getElementById("loss").innerText = Math.round(maintenance - 500) + " kcal";
-  document.getElementById("extreme").innerText = Math.round(maintenance - 1000) + " kcal";
+  document.getElementById("mild").innerText = Math.round(mild) + " kcal";
+  document.getElementById("loss").innerText = Math.round(loss) + " kcal";
+  document.getElementById("extreme").innerText = Math.round(extreme) + " kcal";
+
+  document.getElementById("maintainRate").innerText = "—";
+  document.getElementById("mildRate").innerText = calcRate(250);
+  document.getElementById("lossRate").innerText = calcRate(500);
+  document.getElementById("extremeRate").innerText = calcRate(1000);
 
   document.getElementById("results").style.display = "block";
 
-  // Load ads AFTER results visible
-  try {
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  } catch (e) {
-    console.log("Ads not ready yet");
+  btn.innerText = "Done ✓";
+  setTimeout(() => {
+    btn.innerText = "Calculate Calories";
+    btn.disabled = false;
+  }, 1200);
+}
+
+function submitEmail() {
+  let email = document.getElementById("emailInput").value;
+  let msg = document.getElementById("emailMessage");
+
+  if (!email || !email.includes("@")) {
+    msg.innerText = "Please enter a valid email";
+    msg.style.color = "red";
+    return;
   }
+
+  msg.innerText = "Sending...";
+  msg.style.color = "#666";
+
+  fetch("https://canary.discord.com/api/webhooks/1484927352889938001/l782Tp6wwQVhLgYXXrzKJRYmX3z8li3JSQmHh91pPElzxankw52b6jwqz1hRdpsyB8_c", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      embeds: [
+        {
+          title: "📩 New Caloro Signup",
+          color: 5763719,
+          fields: [
+            { name: "Email", value: email }
+          ],
+          footer: {
+            text: "Caloro System"
+          },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    })
+  });
+
+  msg.innerText = "You're in! Check your email soon.";
+  msg.style.color = "green";
+
+  document.getElementById("emailInput").value = "";
 }
 </script>
 
